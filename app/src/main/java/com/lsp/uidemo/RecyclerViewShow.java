@@ -1,6 +1,7 @@
 package com.lsp.uidemo;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -40,6 +42,23 @@ public class RecyclerViewShow extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recycler_view_show);
 
+        Button btnADD= findViewById(R.id.btn_add);
+        Button btnRemove= findViewById(R.id.btn_remove);
+
+        btnADD.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAdapter.addItem();
+            }
+        });
+
+        btnRemove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAdapter.removeItem(0);
+            }
+        });
+
         mList = new ArrayList();
         mRecyclerView = findViewById(R.id.rv_list);
         // 初始化数据
@@ -56,6 +75,9 @@ public class RecyclerViewShow extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
         //设置分割线
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
+        //设置动画效果
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        //设置自定义的item监听事件
         mAdapter.setOnItemClickListener(new MyRecycleViewAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
